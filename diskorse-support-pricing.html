@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Payments &amp; Stripe – diskorse support</title>
+<title>Pricing &amp; Fees – diskorse support</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -26,19 +26,65 @@
   nav.top a:hover { color: var(--primary); }
   .btn-primary { background: var(--primary); color: white !important; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px; }
   .btn-primary:hover { background: var(--primary-dark); }
-  .breadcrumb { max-width: 820px; margin: 20px auto 0; padding: 0 24px; font-size: 13px; color: var(--ink-soft); display: flex; align-items: center; gap: 8px; }
+  .breadcrumb { max-width: 1180px; margin: 20px auto 0; padding: 0 24px; font-size: 13px; color: var(--ink-soft); display: flex; align-items: center; gap: 8px; }
   .breadcrumb a:hover { color: var(--primary); }
-  .hero { background: linear-gradient(160deg, var(--primary) 0%, #4038c4 100%); padding: 44px 24px 60px; text-align: center; color: white; margin-top: 20px; }
-  .hero h1 { font-size: 36px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 12px; }
-  .hero p { font-size: 16px; color: rgba(255,255,255,0.85); max-width: 580px; margin: 0 auto; }
-  .quicklinks { max-width: 820px; margin: 26px auto 0; padding: 0 24px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .hero { text-align: center; padding: 44px 24px 8px; }
+  .hero .eyebrow { color: var(--primary); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; display: block; }
+  .hero h1 { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 12px; }
+  .hero p { font-size: 15.5px; color: var(--ink-soft); max-width: 560px; margin: 0 auto; }
+  .quicklinks { max-width: 820px; margin: 22px auto 0; padding: 0 24px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
   .quicklinks a { font-size: 13px; font-weight: 600; color: var(--primary); background: var(--primary-tint); padding: 8px 14px; border-radius: 20px; }
   .quicklinks a:hover { background: var(--primary); color: white; }
+
+  /* Plan cards */
+  .plans-wrap { max-width: 1180px; margin: 40px auto 0; padding: 0 24px; }
+  .plan-grid5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; align-items: stretch; }
+  .plan-card {
+    border: 1px solid var(--border); border-radius: 16px; padding: 22px 18px; display: flex; flex-direction: column;
+    background: white;
+  }
+  .plan-card.featured { border-color: var(--primary); background: var(--primary); color: white; position: relative; box-shadow: 0 14px 32px rgba(84,72,238,0.22); }
+  .plan-card .badge {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #FFB020; color: #4a2e00;
+    font-size: 10.5px; font-weight: 800; padding: 4px 12px; border-radius: 20px; letter-spacing: 0.03em; white-space: nowrap;
+  }
+  .plan-card .name { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+  .plan-card .for { font-size: 11.5px; color: var(--ink-soft); margin-bottom: 14px; }
+  .plan-card.featured .for { color: rgba(255,255,255,0.75); }
+  .plan-card .price { font-size: 26px; font-weight: 800; }
+  .plan-card .price small { font-size: 12.5px; font-weight: 500; color: var(--ink-soft); }
+  .plan-card.featured .price small { color: rgba(255,255,255,0.75); }
+  .plan-card .annual { font-size: 11.5px; color: var(--ink-soft); margin-top: 4px; margin-bottom: 16px; }
+  .plan-card.featured .annual { color: rgba(255,255,255,0.75); }
+  .plan-card ul { list-style: none; margin: 0 0 18px 0; flex-grow: 1; }
+  .plan-card li { font-size: 12.5px; color: var(--ink-soft); margin-bottom: 9px; padding-left: 18px; position: relative; }
+  .plan-card.featured li { color: rgba(255,255,255,0.92); }
+  .plan-card li::before { content: "✓"; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+  .plan-card.featured li::before { color: #B7FFE0; }
+  .plan-card li.no::before { content: "–"; color: var(--ink-soft); opacity: 0.5; }
+  .plan-card.featured li.no::before { color: rgba(255,255,255,0.4); }
+  .plan-card li.no { opacity: 0.55; }
+  .plan-card .cta {
+    text-align: center; padding: 10px 14px; border-radius: 8px; font-weight: 700; font-size: 13px;
+    background: var(--primary-tint); color: var(--primary);
+  }
+  .plan-card.featured .cta { background: white; color: var(--primary); }
+  .plan-footnote { text-align: center; font-size: 12.5px; color: var(--ink-soft); margin-top: 26px; }
+  .plan-footnote p { margin-bottom: 4px; }
+
   section.content { max-width: 820px; margin: 70px auto 0; padding: 0 24px; scroll-margin-top: 90px; }
-  .section-head { margin-bottom: 28px; }
+  .section-head { margin-bottom: 26px; }
   .section-head .eyebrow { color: var(--primary); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; display: block; }
-  .section-head h2 { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px; }
+  .section-head h2 { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px; }
   .section-head p { color: var(--ink-soft); font-size: 15px; max-width: 620px; }
+
+  .feature-map { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-top: 8px; }
+  .feature-row { display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .feature-row:last-child { border-bottom: none; }
+  .feature-row:nth-child(odd) { background: var(--primary-tint-2); }
+  .feature-row .name { flex: 1.4; font-weight: 600; }
+  .feature-row .tag { flex: 1; font-weight: 700; color: var(--primary); }
+
   .faq-item { border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
   .faq-item summary { list-style: none; cursor: pointer; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; font-weight: 600; font-size: 15px; background: white; gap: 16px; }
   .faq-item summary::-webkit-details-marker { display: none; }
@@ -48,14 +94,10 @@
   .faq-body { padding: 4px 20px 22px; font-size: 14px; color: var(--ink-soft); background: var(--primary-tint-2); }
   .faq-body p { margin-bottom: 12px; }
   .faq-body p:last-child { margin-bottom: 0; }
-  .faq-body ol, .faq-body ul { margin: 0 0 12px 20px; }
-  .faq-body li { margin-bottom: 6px; }
-  .fee-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13.5px; }
-  .fee-table th, .fee-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); }
-  .fee-table th { color: var(--ink); font-weight: 700; background: white; }
   .placeholder { background: var(--amber-bg); color: var(--amber); padding: 1px 7px; border-radius: 5px; font-weight: 700; font-size: 12.5px; white-space: nowrap; }
   .note { border-left: 3px solid var(--primary); background: white; padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 13.5px; color: var(--ink); }
   .note a { color: var(--primary); font-weight: 600; }
+  .note.flag { border-left-color: var(--amber); }
   .contact-card { margin: 90px auto 0; max-width: 1080px; padding: 0 24px; }
   .contact-inner { background: var(--primary-tint-2); border: 1px solid var(--border); border-radius: 16px; padding: 44px; text-align: center; }
   .contact-inner h3 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
@@ -67,9 +109,12 @@
   .footer-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--ink-soft); }
   .footer-links { display: flex; gap: 20px; }
   .footer-links a:hover { color: var(--primary); }
+
+  @media (max-width: 1040px) { .plan-grid5 { grid-template-columns: repeat(3, 1fr); } }
   @media (max-width: 860px) { nav.top { display: none; } }
+  @media (max-width: 640px) { .plan-grid5 { grid-template-columns: 1fr; } .plan-card.featured { order: -1; } }
   @media (max-width: 560px) {
-    .hero h1 { font-size: 28px; }
+    .hero h1 { font-size: 26px; }
     .footer-inner { flex-direction: column; align-items: flex-start; }
   }
 </style>
@@ -77,7 +122,7 @@
 <body>
 
 <div class="draft-banner">
-  Design draft for internal review. This page covers Stripe mechanics only. For what Diskorse itself charges, see Pricing &amp; Fees.
+  Design draft for internal review. Plan names, prices, and feature gates below reflect the pricing structure shared 2026-07-17. Still to confirm: whether the 10% commission applies to Vault sales on the Engage plan.
 </div>
 
 <header class="site">
@@ -87,8 +132,8 @@
     <span class="tag">support</span>
   </a>
   <nav class="top">
-    <a href="diskorse-support-pricing.html">Pricing &amp; Fees</a>
     <a href="diskorse-support-getting-started.html">Getting Started</a>
+    <a href="diskorse-support-payments.html">Connect Stripe</a>
     <a href="#" class="btn-primary">Contact support</a>
   </nav>
 </header>
@@ -96,126 +141,164 @@
 <div class="breadcrumb">
   <a href="index.html">Support home</a>
   <span>/</span>
-  <span>Payments &amp; Stripe</span>
+  <span>Pricing &amp; Fees</span>
 </div>
 
 <section class="hero">
-  <h1>Payments &amp; Stripe</h1>
-  <p>How Diskorse actually sends you money. Everything here is about Stripe: connecting it, how it handles different countries, and the fees Stripe itself charges.</p>
+  <span class="eyebrow">Pricing</span>
+  <h1>Choose how you use Diskorse</h1>
+  <p>Every plan includes free access to Debates, Daily News, and reading Explainers. Upgrade for creation, earning, and brand tools. All paid plans are available monthly or annually, annual billing saves you 2 months.</p>
 </section>
 
 <div class="quicklinks">
-  <a href="#connect">Connect Stripe</a>
-  <a href="#countries">Availability by country</a>
-  <a href="#fees">Stripe's fees</a>
-  <a href="#payouts">Payouts</a>
+  <a href="#plans">The plans</a>
+  <a href="#compare">What needs which plan</a>
+  <a href="#commission">Our commission</a>
+  <a href="diskorse-support-payments.html">Connect Stripe &rarr;</a>
 </div>
 
-<section class="content" id="connect">
-  <div class="section-head">
-    <span class="eyebrow">Getting set up</span>
-    <h2>Connecting Stripe</h2>
-    <p>Stripe is Diskorse's payment provider. It takes a few minutes to connect, and you'll need it before you can receive money from Counsel, Vault, or paid Problem Solver collaboration.</p>
+<div class="plans-wrap" id="plans">
+  <div class="plan-grid5">
+
+    <div class="plan-card">
+      <div class="name">Free</div>
+      <div class="for">Always free</div>
+      <div class="price">$0</div>
+      <div class="annual">&nbsp;</div>
+      <ul>
+        <li>Debates &amp; Daily News, full access</li>
+        <li>Explainers, read only</li>
+        <li>DMs to connections, 5/month</li>
+        <li>Vault &amp; Bundles, buy &amp; read freely</li>
+        <li>Problem Solver, browse only</li>
+        <li class="no">Counsel sessions</li>
+        <li class="no">Create Vault content or Bundles</li>
+      </ul>
+      <div class="cta">Get Started</div>
+    </div>
+
+    <div class="plan-card">
+      <div class="name">Engage</div>
+      <div class="for">For active participants</div>
+      <div class="price">$5<small>/mo</small></div>
+      <div class="annual">or $50/yr</div>
+      <ul>
+        <li>Everything in Free</li>
+        <li>Problem Solver, full access</li>
+        <li>Unlimited DMs, to anyone</li>
+        <li>Create &amp; sell Vault articles, individual</li>
+        <li class="no">Bundles, Counsel, Explainers publish</li>
+      </ul>
+      <div class="cta">Start Engaging</div>
+    </div>
+
+    <div class="plan-card featured">
+      <span class="badge">MOST POPULAR</span>
+      <div class="name">Creator</div>
+      <div class="for">For freelancers, consultants &amp; creators</div>
+      <div class="price">$12<small>/mo</small></div>
+      <div class="annual">or $120/yr</div>
+      <ul>
+        <li>Everything in Engage</li>
+        <li>Counsel, offer &amp; book paid sessions</li>
+        <li>Vault + Bundles, full creation &amp; selling</li>
+        <li>Explainers, publish enabled</li>
+        <li>Priority support</li>
+      </ul>
+      <div class="note" style="background: rgba(255,255,255,0.14); border-left-color: white; color: white; font-size: 11.5px; padding: 8px 10px; margin-bottom: 14px;">+ 10% commission on Vault sales &amp; Counsel sessions</div>
+      <div class="cta">Start Creating</div>
+    </div>
+
+    <div class="plan-card">
+      <div class="name">Brand</div>
+      <div class="for">Show up as a brand, not just a person</div>
+      <div class="price">$29<small>/mo</small></div>
+      <div class="annual">or $290/yr</div>
+      <ul>
+        <li>Everything in Creator</li>
+        <li>Brand verification questionnaire</li>
+        <li>Brand page on your Room</li>
+        <li>Brand tagline on profile</li>
+        <li>Brand rep badge in debates</li>
+        <li>Brand Queries, 100/month cap</li>
+        <li>Dedicated team support</li>
+      </ul>
+      <div class="cta">Go Brand</div>
+    </div>
+
+    <div class="plan-card">
+      <div class="name">Brand+</div>
+      <div class="for">For brands that outgrow the cap</div>
+      <div class="price">$50<small>/mo</small></div>
+      <div class="annual">or $500/yr</div>
+      <ul>
+        <li>Everything in Brand</li>
+        <li>Unlimited Brand Queries, no cap</li>
+      </ul>
+      <div class="cta">Switch to Brand+</div>
+    </div>
+
   </div>
 
-  <details class="faq-item" open>
-    <summary>How do I connect Stripe to receive payments on Diskorse?<span class="plus">+</span></summary>
-    <div class="faq-body">
-      <p>Before you start, Stripe will ask for details about you or your business and your customer support information.</p>
-      <p><strong>Note:</strong> Your support phone number, email, and address may appear on subscriber receipts and card statements. You can update these after Stripe onboarding is complete.</p>
-      <ol>
-        <li>Go to <strong>Settings</strong> and select <strong>Payments</strong>.</li>
-        <li>Select <strong>Connect Stripe</strong>. You will be taken to Stripe's setup flow.</li>
-        <li>Enter the requested details, including a registered address, personal or business information, and a bank account for payouts.</li>
-        <li>Once your Stripe account is set up, you will return to Diskorse where you can turn on paid access.</li>
-      </ol>
-      <div class="note">Placeholder screenshots of the Diskorse Payments settings screen and Stripe connect flow go here once the flow is built.</div>
-    </div>
-  </details>
+  <div class="plan-footnote">
+    <p>+ 10% commission on Vault sales &amp; Counsel sessions on Creator, Brand, and Brand+ plans.</p>
+    <p>Prices shown exclude applicable taxes, calculated automatically at checkout via Stripe Tax.</p>
+  </div>
+</div>
 
-  <details class="faq-item">
-    <summary>What information does Stripe actually need from me?<span class="plus">+</span></summary>
-    <div class="faq-body">
-      <p>Typically your legal name or business name, a registered address, a bank account for payouts, and identity verification documents. Exactly what's required depends on your country.</p>
-      <p>You can hide your phone number and use an alternate support email after onboarding is complete. <span class="placeholder">Placeholder: link to Diskorse's own privacy settings once built.</span></p>
-    </div>
-  </details>
+<section class="content" id="compare">
+  <div class="section-head">
+    <span class="eyebrow">Quick reference</span>
+    <h2>What needs which plan</h2>
+  </div>
+  <div class="feature-map">
+    <div class="feature-row"><div class="name">Debates, Daily News, reading Explainers</div><div class="tag">Free</div></div>
+    <div class="feature-row"><div class="name">Buying &amp; reading Vault articles and Bundles</div><div class="tag">Free</div></div>
+    <div class="feature-row"><div class="name">Browsing a Problem Solver</div><div class="tag">Free</div></div>
+    <div class="feature-row"><div class="name">Posting or contributing to a Problem Solver</div><div class="tag">Engage</div></div>
+    <div class="feature-row"><div class="name">Selling an individual Vault article</div><div class="tag">Engage</div></div>
+    <div class="feature-row"><div class="name">Unlimited DMs</div><div class="tag">Engage</div></div>
+    <div class="feature-row"><div class="name">Offering or booking a Counsel session</div><div class="tag">Creator</div></div>
+    <div class="feature-row"><div class="name">Selling a Bundle</div><div class="tag">Creator</div></div>
+    <div class="feature-row"><div class="name">Publishing Explainers</div><div class="tag">Creator</div></div>
+    <div class="feature-row"><div class="name">Responding to Brand Queries</div><div class="tag">Brand</div></div>
+    <div class="feature-row"><div class="name">Brand Queries beyond 100/month</div><div class="tag">Brand+</div></div>
+  </div>
 </section>
 
-<section class="content" id="countries">
+<section class="content" id="commission">
   <div class="section-head">
-    <span class="eyebrow">Where it works</span>
-    <h2>Stripe availability by country</h2>
-    <p>Stripe supports most major countries, but its exact feature set and requirements vary from one to the next.</p>
+    <span class="eyebrow">Once you're earning</span>
+    <h2>Our commission</h2>
+    <p>On top of your plan, Diskorse takes a cut once a paid transaction actually happens.</p>
   </div>
 
   <details class="faq-item" open>
-    <summary>How does Stripe work for creators in the US?<span class="plus">+</span></summary>
+    <summary>What does Diskorse take from each sale?<span class="plus">+</span></summary>
     <div class="faq-body">
-      <p><span class="placeholder">Placeholder: confirm US specific onboarding requirements and typical verification timeline.</span></p>
+      <p>10% on Vault sales and Counsel sessions, for anyone on the Creator, Brand, or Brand+ plan. Stripe takes its own separate processing fee on top of that, covered on the <a href="diskorse-support-payments.html">Payments &amp; Stripe</a> page.</p>
+      <div class="note flag">Flagged to confirm: the commission list only names Creator, Brand, and Brand+, but the Engage plan also allows selling individual Vault articles. Worth double checking whether Engage sales carry the same 10% or are commission free.</div>
     </div>
   </details>
 
   <details class="faq-item">
-    <summary>What if Stripe is not supported in my country?<span class="plus">+</span></summary>
+    <summary>Can I set my own prices and discounts?<span class="plus">+</span></summary>
     <div class="faq-body">
-      <p>Availability depends on Stripe's supported countries, which can change over time. <span class="placeholder">Placeholder: guidance for creators outside supported regions, to confirm.</span></p>
+      <p>Yes. Whether it's a Counsel session, a Vault article, a Bundle, or what you pay a Problem Solver collaborator, you set the price and you decide if and when to offer a discount. Diskorse's commission is a percentage of whatever price you set, so it moves with you.</p>
     </div>
   </details>
 
   <details class="faq-item">
-    <summary>Do non-card payment methods work outside the US?<span class="plus">+</span></summary>
+    <summary>How does annual billing work?<span class="plus">+</span></summary>
     <div class="faq-body">
-      <p>In some regions, yes. Stripe supports local methods like direct debit or bank transfer in certain countries alongside standard card payments. <span class="placeholder">Placeholder: confirm which methods Diskorse enables by region.</span></p>
-    </div>
-  </details>
-</section>
-
-<section class="content" id="fees">
-  <div class="section-head">
-    <span class="eyebrow">What Stripe charges</span>
-    <h2>Stripe's fees</h2>
-    <p>These are separate from anything Diskorse charges. Stripe sets and keeps these fees for processing the payment itself.</p>
-  </div>
-
-  <details class="faq-item" open>
-    <summary>What does Stripe charge per transaction?<span class="plus">+</span></summary>
-    <div class="faq-body">
-      <table class="fee-table">
-        <tr><th>Fee</th><th>Amount</th></tr>
-        <tr><td>Card processing fee</td><td><span class="placeholder">Standard Stripe rate, to confirm by country</span></td></tr>
-        <tr><td>Billing fee, recurring payments</td><td><span class="placeholder">To confirm</span></td></tr>
-      </table>
-      <p>These rates are set by Stripe, not Diskorse, and vary by country and payment method. See <a href="diskorse-support-pricing.html#commission">Pricing &amp; Fees</a> for what Diskorse itself takes on top of this.</p>
+      <p>Paying annually saves you 2 months compared to paying monthly all year, worked out to 10 months' cost for 12 months of access.</p>
     </div>
   </details>
 
   <details class="faq-item">
-    <summary>Does Stripe handle sales tax?<span class="plus">+</span></summary>
+    <summary>Can I change plans later?<span class="plus">+</span></summary>
     <div class="faq-body">
-      <p>Yes. Prices shown on Diskorse exclude applicable taxes, Stripe Tax calculates and adds the right tax automatically at checkout based on the buyer's location.</p>
-    </div>
-  </details>
-</section>
-
-<section class="content" id="payouts">
-  <div class="section-head">
-    <span class="eyebrow">After the sale</span>
-    <h2>How payouts work</h2>
-  </div>
-
-  <details class="faq-item" open>
-    <summary>When do I actually get the money?<span class="plus">+</span></summary>
-    <div class="faq-body">
-      <p>Once Stripe is connected, payouts from paid transactions go directly to your bank account. Timing follows Stripe's standard payout schedule, typically a few business days after each transaction, and can take longer for your first payout.</p>
-      <p>You can view your full payout history and balance at any time from your Stripe dashboard, linked from your Diskorse Payments settings.</p>
-    </div>
-  </details>
-
-  <details class="faq-item">
-    <summary>Will I be notified when a payout is on its way?<span class="plus">+</span></summary>
-    <div class="faq-body">
-      <p>Yes. Stripe notifies you by email once a payout is sent, with the amount and estimated arrival date.</p>
+      <p><span class="placeholder">Placeholder: upgrade, downgrade, and proration policy to confirm.</span></p>
     </div>
   </details>
 </section>
