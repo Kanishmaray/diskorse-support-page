@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Creatives &amp; Writers – diskorse support</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #5448EE; --primary-dark: #4038c4; --primary-tint: #EDECFD; --primary-tint-2: #F7F6FE;
+    --ink: #1C1B2E; --ink-soft: #504F66; --border: #E6E4F5; --bg: #FFFFFF;
+    --amber: #B4790A; --amber-bg: #FFF3D6; --green: #17795C;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--ink); background: var(--bg); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  .draft-banner { background: #FFF7E0; color: #6B5900; text-align: center; font-size: 13px; padding: 10px 16px; border-bottom: 1px solid #F0E2A8; }
+  header.site { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); z-index: 50; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 20px; letter-spacing: -0.02em; }
+  .logo .mark { width: 30px; height: 30px; border-radius: 8px; background: var(--primary); display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 16px; }
+  .logo .word { color: var(--ink); }
+  .logo .tag { font-weight: 500; color: var(--ink-soft); font-size: 15px; border-left: 1px solid var(--border); padding-left: 12px; margin-left: 4px; }
+  nav.top { display: flex; align-items: center; gap: 24px; font-size: 14px; font-weight: 500; color: var(--ink-soft); }
+  nav.top a:hover { color: var(--primary); }
+  nav.top a.active { color: var(--primary); }
+  .btn-primary { background: var(--primary); color: white !important; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px; }
+  .btn-primary:hover { background: var(--primary-dark); }
+  .breadcrumb { max-width: 820px; margin: 20px auto 0; padding: 0 24px; font-size: 13px; color: var(--ink-soft); display: flex; align-items: center; gap: 8px; }
+  .breadcrumb a:hover { color: var(--primary); }
+  .persona-hero { background: linear-gradient(160deg, var(--primary) 0%, #4038c4 100%); padding: 48px 24px 60px; color: white; margin-top: 20px; }
+  .persona-hero .inner { max-width: 820px; margin: 0 auto; }
+  .persona-hero .kicker { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.75); margin-bottom: 12px; }
+  .persona-hero h1 { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 14px; max-width: 620px; }
+  .persona-hero p { font-size: 16px; color: rgba(255,255,255,0.88); max-width: 600px; }
+  .persona-hero .chips { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
+  .persona-hero .chip { font-size: 12px; font-weight: 700; background: rgba(255,255,255,0.16); padding: 6px 12px; border-radius: 20px; }
+  section.content { max-width: 820px; margin: 64px auto 0; padding: 0 24px; scroll-margin-top: 90px; }
+  section.content.tight { margin-top: 40px; }
+  .section-head { margin-bottom: 22px; }
+  .section-head .eyebrow { color: var(--primary); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; display: block; }
+  .section-head h2 { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px; }
+  .section-head p { color: var(--ink-soft); font-size: 15px; max-width: 620px; }
+
+  .feature-card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .feature-card {
+    border: 1px solid var(--border); border-radius: 16px; padding: 26px 24px; background: white;
+    box-shadow: 0 4px 18px rgba(28, 27, 46, 0.05); transition: transform 0.15s ease, box-shadow 0.15s ease;
+    display: flex; flex-direction: column;
+  }
+  .feature-card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(84, 72, 238, 0.16); border-color: var(--primary); }
+  .feature-card .icon { width: 42px; height: 42px; border-radius: 11px; background: var(--primary-tint); color: var(--primary); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .feature-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+  .feature-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 16px; flex-grow: 1; }
+  .feature-card .split-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+  .feature-card .split-tag { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
+  .feature-card .split-tag.a { color: var(--primary); background: var(--primary-tint); }
+  .feature-card .split-tag.b { color: var(--green); background: #E7F6EF; }
+  .feature-card .go { font-size: 13px; font-weight: 700; color: var(--primary); }
+
+  .faq-item { border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
+  .faq-item summary { list-style: none; cursor: pointer; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; font-weight: 600; font-size: 15px; background: white; gap: 16px; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary .plus { width: 22px; height: 22px; border-radius: 50%; background: var(--primary-tint); color: var(--primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; font-weight: 700; transition: transform 0.15s ease; }
+  .faq-item[open] summary .plus { transform: rotate(45deg); }
+  .faq-item[open] summary { border-bottom: 1px solid var(--border); }
+  .faq-item.room-toggle summary { font-size: 14.5px; color: var(--ink-soft); background: var(--primary-tint-2); }
+  .faq-body { padding: 4px 20px 22px; font-size: 14px; color: var(--ink-soft); background: var(--primary-tint-2); }
+  .faq-body p { margin-bottom: 12px; }
+  .faq-body p:last-child { margin-bottom: 0; }
+
+  .contact-card { margin: 90px auto 0; max-width: 1080px; padding: 0 24px; }
+  .contact-inner { background: var(--primary-tint-2); border: 1px solid var(--border); border-radius: 16px; padding: 44px; text-align: center; }
+  .contact-inner h3 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+  .contact-inner p { color: var(--ink-soft); font-size: 14.5px; margin-bottom: 20px; }
+  .contact-actions { display: flex; gap: 12px; justify-content: center; }
+  .btn-outline { border: 1px solid var(--border); background: white; padding: 11px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+  footer.site { margin-top: 90px; border-top: 1px solid var(--border); padding: 40px 24px; }
+  .footer-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--ink-soft); }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a:hover { color: var(--primary); }
+  @media (max-width: 860px) { nav.top { display: none; } }
+  @media (max-width: 640px) { .feature-card-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) {
+    .persona-hero h1 { font-size: 26px; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="draft-banner">
+  Design draft for internal review. Every figure below is a placeholder pending your confirmation.
+</div>
+
+<header class="site">
+  <a href="diskorse-support-mockup.html" class="logo">
+    <div class="mark">d</div>
+    <span class="word">diskorse</span>
+    <span class="tag">support</span>
+  </a>
+  <nav class="top">
+    <a href="diskorse-support-founders.html">Founders</a>
+    <a href="diskorse-support-experts.html">Experts</a>
+    <a href="diskorse-support-creatives.html" class="active">Creatives</a>
+    <a href="diskorse-support-pricing.html">Pricing</a>
+    <a href="#" class="btn-primary">Contact support</a>
+  </nav>
+</header>
+
+<div class="breadcrumb">
+  <a href="diskorse-support-mockup.html">Support home</a>
+  <span>/</span>
+  <a href="diskorse-support-getting-started.html">Getting Started</a>
+  <span>/</span>
+  <span>Creatives &amp; Writers</span>
+</div>
+
+<div class="persona-hero">
+  <div class="inner">
+    <span class="kicker">For Creatives &amp; Writers</span>
+    <h1>Share your ideas. Get paid for the ones that land.</h1>
+    <p>For writers, journalists, and anyone with something worth saying. Sell your writing on Vault, publish ongoing Explainers to build your audience, and package your best work into Bundles.</p>
+    <div class="chips">
+      <span class="chip">Explainers</span>
+      <span class="chip">Vault &amp; Bundles</span>
+    </div>
+  </div>
+</div>
+
+<section class="content tight">
+  <details class="faq-item room-toggle">
+    <summary>What is a Room, from a creator's perspective?<span class="plus">+</span></summary>
+    <div class="faq-body">
+      <p>Your Room is where your writing lives, where people find you, follow you, and eventually pay you. Explainers, Vault articles, and Bundles all live inside it.</p>
+      <p>Setting one up costs nothing. See the full explanation on <a href="diskorse-support-getting-started.html#basics" style="color: var(--primary); font-weight: 600;">Rooms &amp; Basics</a>.</p>
+    </div>
+  </details>
+</section>
+
+<section class="content">
+  <div class="section-head">
+    <span class="eyebrow">Explore in depth</span>
+    <h2>What's here for you</h2>
+    <p>Two features, each with its own deep dive: what it is, how it works from both sides, and exactly what it costs.</p>
+  </div>
+
+  <div class="feature-card-grid">
+    <a href="diskorse-support-vault.html" class="feature-card">
+      <div class="icon">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+      </div>
+      <h3>Vault &amp; Bundles</h3>
+      <p>Sell an individual article, or package your best work into a Bundle. You keep a direct share of every sale.</p>
+      <div class="split-tags">
+        <span class="split-tag a">Writing &amp; publishing</span>
+        <span class="split-tag b">Reading &amp; buying</span>
+      </div>
+      <span class="go">Explore Vault &amp; Bundles &rarr;</span>
+    </a>
+
+    <a href="diskorse-support-explainers.html" class="feature-card">
+      <div class="icon">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+      </div>
+      <h3>Explainers</h3>
+      <p>Ongoing posts inside your Room, similar to a blog, and how most creators build an audience over time.</p>
+      <div class="split-tags">
+        <span class="split-tag a">Publishing</span>
+        <span class="split-tag b">Reading</span>
+      </div>
+      <span class="go">Explore Explainers &rarr;</span>
+    </a>
+  </div>
+</section>
+
+<div class="contact-card">
+  <div class="contact-inner">
+    <h3>Still need help?</h3>
+    <p>Reach out and our support team will get back to you.</p>
+    <div class="contact-actions">
+      <a href="#" class="btn-primary">Contact support</a>
+      <a href="#" class="btn-outline">support@diskorse.com (placeholder)</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site">
+  <div class="footer-inner">
+    <span>© 2026 Diskorse, Inc.</span>
+    <div class="footer-links">
+      <a href="diskorse-support-mockup.html">Support home</a>
+      <a href="#">Status</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

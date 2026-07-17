@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>diskorse support</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #5448EE;
+    --primary-dark: #4038c4;
+    --primary-tint: #EDECFD;
+    --primary-tint-2: #F7F6FE;
+    --ink: #1C1B2E;
+    --ink-soft: #504F66;
+    --border: #E6E4F5;
+    --bg: #FFFFFF;
+    --amber: #B4790A;
+    --amber-bg: #FFF3D6;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .draft-banner {
+    background: #FFF7E0;
+    color: #6B5900;
+    text-align: center;
+    font-size: 13px;
+    padding: 10px 16px;
+    border-bottom: 1px solid #F0E2A8;
+  }
+
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Header */
+  header.site {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(8px);
+    z-index: 50;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+  }
+
+  .logo .mark {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 800;
+    font-size: 16px;
+  }
+
+  .logo .word { color: var(--ink); }
+  .logo .tag {
+    font-weight: 500;
+    color: var(--ink-soft);
+    font-size: 15px;
+    border-left: 1px solid var(--border);
+    padding-left: 12px;
+    margin-left: 4px;
+  }
+
+  nav.top {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-soft);
+  }
+
+  nav.top a:hover { color: var(--primary); }
+
+  .btn-primary {
+    background: var(--primary);
+    color: white !important;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .btn-primary:hover { background: var(--primary-dark); }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(160deg, var(--primary) 0%, #4038c4 100%);
+    padding: 64px 24px 96px;
+    text-align: center;
+    color: white;
+  }
+
+  .hero h1 {
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+
+  .hero p {
+    font-size: 17px;
+    color: rgba(255,255,255,0.85);
+    max-width: 520px;
+    margin: 0 auto 32px;
+  }
+
+  .search-box {
+    max-width: 560px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    padding: 6px 6px 6px 18px;
+    box-shadow: 0 12px 32px rgba(28, 27, 46, 0.25);
+  }
+
+  .search-box svg { flex-shrink: 0; color: var(--ink-soft); }
+
+  .search-box input {
+    border: none;
+    outline: none;
+    flex: 1;
+    padding: 12px 12px;
+    font-size: 15px;
+    font-family: inherit;
+    color: var(--ink);
+  }
+
+  .search-box button {
+    background: var(--ink);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  /* Categories */
+  .categories {
+    max-width: 1080px;
+    margin: -56px auto 0;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+
+  .cat-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 20px;
+    box-shadow: 0 4px 18px rgba(28, 27, 46, 0.06);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    display: block;
+  }
+
+  .cat-card.linkable:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 26px rgba(84, 72, 238, 0.14);
+    border-color: var(--primary);
+    cursor: pointer;
+  }
+
+  .cat-card .icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--primary-tint);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+
+  .cat-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .cat-card p {
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .cat-card .soon {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    background: var(--primary-tint-2);
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+
+  .cat-card .go {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary);
+    background: var(--primary-tint);
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+
+  /* Section */
+  section.content {
+    max-width: 820px;
+    margin: 80px auto 0;
+    padding: 0 24px;
+    scroll-margin-top: 90px;
+  }
+
+  .section-head {
+    margin-bottom: 28px;
+  }
+
+  .section-head .eyebrow {
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .section-head h2 {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+
+  .section-head p {
+    color: var(--ink-soft);
+    font-size: 15px;
+    max-width: 560px;
+  }
+
+  /* FAQ accordion */
+  .faq-item {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 15px;
+    background: white;
+    gap: 16px;
+  }
+
+  .faq-item summary::-webkit-details-marker { display: none; }
+
+  .faq-item summary .plus {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--primary-tint);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+    font-weight: 700;
+    transition: transform 0.15s ease;
+  }
+
+  .faq-item[open] summary .plus { transform: rotate(45deg); }
+  .faq-item[open] summary { border-bottom: 1px solid var(--border); }
+
+  .faq-body {
+    padding: 4px 20px 22px;
+    font-size: 14px;
+    color: var(--ink-soft);
+    background: var(--primary-tint-2);
+  }
+
+  .faq-body p { margin-bottom: 12px; }
+  .faq-body p:last-child { margin-bottom: 0; }
+
+  .faq-body ol, .faq-body ul {
+    margin: 0 0 12px 20px;
+  }
+
+  .faq-body li { margin-bottom: 6px; }
+
+  .fee-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 13.5px;
+  }
+
+  .fee-table th, .fee-table td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .fee-table th {
+    color: var(--ink);
+    font-weight: 700;
+    background: white;
+  }
+
+  .placeholder {
+    background: var(--amber-bg);
+    color: var(--amber);
+    padding: 1px 7px;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 12.5px;
+    white-space: nowrap;
+  }
+
+  .note {
+    border-left: 3px solid var(--primary);
+    background: white;
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: 13.5px;
+    color: var(--ink);
+  }
+
+  /* Popular articles */
+  .popular-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .popular-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 18px;
+    display: block;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .popular-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(84, 72, 238, 0.1);
+    border-color: var(--primary);
+  }
+
+  .popular-card .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary);
+    background: var(--primary-tint);
+    padding: 3px 9px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .popular-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  /* New here callout */
+  .new-here {
+    background: linear-gradient(160deg, var(--primary) 0%, #4038c4 100%);
+    border-radius: 18px;
+    padding: 36px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    color: white;
+  }
+
+  .new-here h3 { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+  .new-here p { font-size: 14px; color: rgba(255,255,255,0.85); max-width: 480px; }
+  .new-here .btn-primary { background: white; color: var(--primary) !important; }
+  .new-here .btn-primary:hover { background: rgba(255,255,255,0.9); }
+
+  /* Contact card */
+  .contact-card {
+    margin: 80px auto 0;
+    max-width: 1080px;
+    padding: 0 24px;
+  }
+
+  .contact-inner {
+    background: var(--primary-tint-2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 44px;
+    text-align: center;
+  }
+
+  .contact-inner h3 {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+
+  .contact-inner p {
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    margin-bottom: 20px;
+  }
+
+  .contact-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  .btn-outline {
+    border: 1px solid var(--border);
+    background: white;
+    padding: 11px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+  /* Footer */
+  footer.site {
+    margin-top: 90px;
+    border-top: 1px solid var(--border);
+    padding: 40px 24px;
+  }
+
+  .footer-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 20px;
+  }
+
+  .footer-links a:hover { color: var(--primary); }
+
+  @media (max-width: 860px) {
+    .categories { grid-template-columns: repeat(2, 1fr); }
+    .popular-grid { grid-template-columns: repeat(2, 1fr); }
+    nav.top { display: none; }
+  }
+
+  @media (max-width: 560px) {
+    .categories { grid-template-columns: 1fr; margin-top: -40px; }
+    .popular-grid { grid-template-columns: 1fr; }
+    .new-here { flex-direction: column; align-items: flex-start; text-align: left; }
+    .hero h1 { font-size: 30px; }
+    .search-box { flex-wrap: wrap; padding: 14px; border-radius: 14px; }
+    .search-box input { width: 100%; padding: 10px 0; }
+    .search-box button { width: 100%; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="draft-banner">
+  Design draft for internal review. All pricing and commission figures below are placeholders pending confirmation.
+</div>
+
+<header class="site">
+  <div class="logo">
+    <div class="mark">d</div>
+    <span class="word">diskorse</span>
+    <span class="tag">support</span>
+  </div>
+  <nav class="top">
+    <a href="diskorse-support-pricing.html">Pricing &amp; Fees</a>
+    <a href="diskorse-support-payments.html">Payments &amp; Stripe</a>
+    <a href="diskorse-support-getting-started.html">Getting Started</a>
+    <a href="#" class="btn-primary">Contact support</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>How can we help?</h1>
+  <p>Find answers about pricing, commission, and connecting Stripe to Diskorse.</p>
+  <div class="search-box">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <input type="text" placeholder="Search for help, e.g. Stripe or fees">
+    <button>Search</button>
+  </div>
+</section>
+
+<div class="categories">
+  <a href="diskorse-support-pricing.html" class="cat-card linkable">
+    <div class="icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+    </div>
+    <h3>Pricing &amp; Fees</h3>
+    <p>What Diskorse costs, and how our commission works.</p>
+  </a>
+  <a href="diskorse-support-payments.html" class="cat-card linkable">
+    <div class="icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+    </div>
+    <h3>Payments &amp; Stripe</h3>
+    <p>Connect Stripe, manage payouts, and view your balance.</p>
+  </a>
+  <a href="diskorse-support-getting-started.html" class="cat-card linkable">
+    <div class="icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    </div>
+    <h3>Getting Started</h3>
+    <p>Set up your profile and start your first debate or room.</p>
+    <span class="go">Explore &rarr;</span>
+  </a>
+  <div class="cat-card">
+    <div class="icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg>
+    </div>
+    <h3>Your Account</h3>
+    <p>Manage settings, billing, and account details.</p>
+    <span class="soon">Coming soon</span>
+  </div>
+</div>
+
+<section class="content" style="margin-top: 70px; max-width: 1080px;">
+  <div class="section-head" style="text-align: center; margin: 0 auto 26px;">
+    <span class="eyebrow">Popular articles</span>
+    <h2>Straight to the point</h2>
+  </div>
+  <div class="popular-grid">
+    <a href="diskorse-support-counsel.html#offering" class="popular-card">
+      <span class="tag">Experts</span>
+      <h4>How do I set up Counsel, and what does Diskorse take?</h4>
+    </a>
+    <a href="diskorse-support-problem-solver.html" class="popular-card">
+      <span class="tag">Founders</span>
+      <h4>How does paid collaboration work in Problem Solver?</h4>
+    </a>
+    <a href="diskorse-support-vault.html" class="popular-card">
+      <span class="tag">Creatives</span>
+      <h4>What is a Bundle, and how is it different from a subscription?</h4>
+    </a>
+    <a href="diskorse-support-payments.html#connect" class="popular-card">
+      <span class="tag">Payments</span>
+      <h4>How do I connect Stripe to receive payments?</h4>
+    </a>
+    <a href="diskorse-support-getting-started.html#basics" class="popular-card">
+      <span class="tag">Basics</span>
+      <h4>What is a Room, and why do I need one?</h4>
+    </a>
+    <a href="diskorse-support-pricing.html#plans" class="popular-card">
+      <span class="tag">Pricing</span>
+      <h4>What's free, and what needs a paid plan?</h4>
+    </a>
+  </div>
+</section>
+
+<section class="content" style="margin-top: 70px;">
+  <div class="new-here">
+    <div>
+      <h3>New to Diskorse?</h3>
+      <p>Whether you're validating an idea, selling your expertise, or publishing your writing, the Getting Started hub walks you through it by who you are.</p>
+    </div>
+    <a href="diskorse-support-getting-started.html" class="btn-primary" style="flex-shrink: 0;">Go to Getting Started</a>
+  </div>
+</section>
+
+<div class="contact-card">
+  <div class="contact-inner">
+    <h3>Still need help?</h3>
+    <p>Reach out and our support team will get back to you.</p>
+    <div class="contact-actions">
+      <a href="#" class="btn-primary">Contact support</a>
+      <a href="#" class="btn-outline">support@diskorse.com (placeholder)</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site">
+  <div class="footer-inner">
+    <span>© 2026 Diskorse, Inc.</span>
+    <div class="footer-links">
+      <a href="#">Diskorse home</a>
+      <a href="#">Status</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

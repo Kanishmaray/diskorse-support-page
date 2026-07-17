@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Getting Started – diskorse support</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #5448EE; --primary-dark: #4038c4; --primary-tint: #EDECFD; --primary-tint-2: #F7F6FE;
+    --ink: #1C1B2E; --ink-soft: #504F66; --border: #E6E4F5; --bg: #FFFFFF;
+    --amber: #B4790A; --amber-bg: #FFF3D6; --green: #17795C;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--ink); background: var(--bg); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  .draft-banner { background: #FFF7E0; color: #6B5900; text-align: center; font-size: 13px; padding: 10px 16px; border-bottom: 1px solid #F0E2A8; }
+  header.site { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); z-index: 50; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 20px; letter-spacing: -0.02em; }
+  .logo .mark { width: 30px; height: 30px; border-radius: 8px; background: var(--primary); display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 16px; }
+  .logo .word { color: var(--ink); }
+  .logo .tag { font-weight: 500; color: var(--ink-soft); font-size: 15px; border-left: 1px solid var(--border); padding-left: 12px; margin-left: 4px; }
+  nav.top { display: flex; align-items: center; gap: 24px; font-size: 14px; font-weight: 500; color: var(--ink-soft); }
+  nav.top a:hover { color: var(--primary); }
+  .btn-primary { background: var(--primary); color: white !important; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px; }
+  .btn-primary:hover { background: var(--primary-dark); }
+  .breadcrumb { max-width: 1080px; margin: 20px auto 0; padding: 0 24px; font-size: 13px; color: var(--ink-soft); display: flex; align-items: center; gap: 8px; }
+  .breadcrumb a:hover { color: var(--primary); }
+  .hero { background: linear-gradient(160deg, var(--primary) 0%, #4038c4 100%); padding: 52px 24px 64px; text-align: center; color: white; margin-top: 20px; }
+  .hero h1 { font-size: 36px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 14px; }
+  .hero p { font-size: 16px; color: rgba(255,255,255,0.88); max-width: 620px; margin: 0 auto; }
+
+  section.content { max-width: 820px; margin: 70px auto 0; padding: 0 24px; scroll-margin-top: 90px; }
+  .section-head { margin-bottom: 22px; }
+  .section-head .eyebrow { color: var(--primary); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; display: block; }
+  .section-head h2 { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px; }
+  .section-head p { color: var(--ink-soft); font-size: 15px; max-width: 620px; }
+
+  .faq-item { border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
+  .faq-item summary { list-style: none; cursor: pointer; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; font-weight: 600; font-size: 15px; background: white; gap: 16px; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary .plus { width: 22px; height: 22px; border-radius: 50%; background: var(--primary-tint); color: var(--primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; font-weight: 700; transition: transform 0.15s ease; }
+  .faq-item[open] summary .plus { transform: rotate(45deg); }
+  .faq-item[open] summary { border-bottom: 1px solid var(--border); }
+  .faq-body { padding: 4px 20px 22px; font-size: 14px; color: var(--ink-soft); background: var(--primary-tint-2); }
+  .faq-body p { margin-bottom: 12px; }
+  .faq-body p:last-child { margin-bottom: 0; }
+  .faq-body ul { margin: 0 0 12px 20px; }
+  .faq-body li { margin-bottom: 6px; }
+
+  .placeholder { background: var(--amber-bg); color: var(--amber); padding: 1px 7px; border-radius: 5px; font-weight: 700; font-size: 12.5px; white-space: nowrap; }
+  .note { border-left: 3px solid var(--primary); background: white; padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 13.5px; color: var(--ink); }
+  .note a { color: var(--primary); font-weight: 600; }
+  .note.flag { border-left-color: var(--amber); }
+
+  /* Persona picker */
+  .picker-head { text-align: center; max-width: 620px; margin: 0 auto 36px; }
+  .picker-head .eyebrow { color: var(--primary); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; display: block; }
+  .picker-head h2 { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px; }
+  .picker-head p { color: var(--ink-soft); font-size: 15px; }
+
+  .persona-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .persona-card {
+    border: 1px solid var(--border); border-radius: 16px; padding: 28px 24px; background: white;
+    box-shadow: 0 4px 18px rgba(28, 27, 46, 0.05); transition: transform 0.15s ease, box-shadow 0.15s ease;
+    display: flex; flex-direction: column; height: 100%;
+  }
+  .persona-card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(84, 72, 238, 0.16); border-color: var(--primary); }
+  .persona-card .icon {
+    width: 44px; height: 44px; border-radius: 12px; background: var(--primary-tint); color: var(--primary);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
+  }
+  .persona-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+  .persona-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 16px; flex-grow: 1; }
+  .persona-card .feature-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+  .persona-card .feature-chip { font-size: 11px; font-weight: 700; color: var(--primary); background: var(--primary-tint); padding: 4px 10px; border-radius: 20px; }
+  .persona-card .go { font-size: 13px; font-weight: 700; color: var(--primary); }
+
+  .basics-note {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    border: 1px solid var(--border); background: var(--primary-tint-2); border-radius: 14px; padding: 18px 22px;
+    margin-top: 30px;
+  }
+  .basics-note p { font-size: 13.5px; color: var(--ink-soft); }
+  .basics-note a { color: var(--primary); font-weight: 700; font-size: 13.5px; flex-shrink: 0; }
+
+  /* Free features (non-FAQ explainer cards) */
+  .feature-explain-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  .feature-explain-card { border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; display: flex; gap: 18px; }
+  .feature-explain-card .icon { width: 42px; height: 42px; border-radius: 11px; background: var(--primary-tint); color: var(--primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .feature-explain-card h4 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .feature-explain-card p { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 8px; }
+  .feature-explain-card .tag-free { display: inline-block; font-size: 11px; font-weight: 700; color: var(--green); background: #E7F6EF; padding: 3px 9px; border-radius: 20px; margin-bottom: 8px; }
+  .feature-explain-card a.learn { font-size: 13px; font-weight: 700; color: var(--primary); }
+
+  .contact-card { margin: 90px auto 0; max-width: 1080px; padding: 0 24px; }
+  .contact-inner { background: var(--primary-tint-2); border: 1px solid var(--border); border-radius: 16px; padding: 44px; text-align: center; }
+  .contact-inner h3 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+  .contact-inner p { color: var(--ink-soft); font-size: 14.5px; margin-bottom: 20px; }
+  .contact-actions { display: flex; gap: 12px; justify-content: center; }
+  .btn-outline { border: 1px solid var(--border); background: white; padding: 11px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+  footer.site { margin-top: 90px; border-top: 1px solid var(--border); padding: 40px 24px; }
+  .footer-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--ink-soft); }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a:hover { color: var(--primary); }
+  hr.divider { border: none; border-top: 1px solid var(--border); max-width: 820px; margin: 70px auto 0; }
+
+  @media (max-width: 900px) { .persona-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 860px) { nav.top { display: none; } }
+  @media (max-width: 560px) {
+    .hero h1 { font-size: 28px; }
+    .basics-note { flex-direction: column; align-items: flex-start; }
+    .feature-explain-card { flex-direction: column; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="draft-banner">
+  Design draft for internal review. Structure and every figure below are placeholders pending your confirmation.
+</div>
+
+<header class="site">
+  <a href="diskorse-support-mockup.html" class="logo">
+    <div class="mark">d</div>
+    <span class="word">diskorse</span>
+    <span class="tag">support</span>
+  </a>
+  <nav class="top">
+    <a href="diskorse-support-founders.html">Founders</a>
+    <a href="diskorse-support-experts.html">Experts</a>
+    <a href="diskorse-support-creatives.html">Creatives</a>
+    <a href="#basics">Rooms &amp; Basics</a>
+    <a href="#" class="btn-primary">Contact support</a>
+  </nav>
+</header>
+
+<div class="breadcrumb">
+  <a href="diskorse-support-mockup.html">Support home</a>
+  <span>/</span>
+  <span>Getting Started</span>
+</div>
+
+<section class="hero">
+  <h1>Welcome to Diskorse</h1>
+  <p>A place to think out loud, argue your point, build an audience, and get paid for the ideas that are actually worth something. Here's how it all fits together.</p>
+</section>
+
+<!-- PERSONA PICKER -->
+<section class="content">
+  <div class="picker-head">
+    <span class="eyebrow">Which are you?</span>
+    <h2>Diskorse works differently depending on what you're here to do</h2>
+    <p>Pick the one that fits best. Each page walks through what to use, how it works, and exactly what it costs.</p>
+  </div>
+
+  <div class="persona-grid">
+    <a href="diskorse-support-founders.html" class="persona-card">
+      <div class="icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/></svg>
+      </div>
+      <h3>Founders &amp; Builders</h3>
+      <p>You've got a product, a service, or a big decision to make, and you want real signal before you commit years to it.</p>
+      <div class="feature-chips">
+        <span class="feature-chip">Problem Solver</span>
+        <span class="feature-chip">Brand Queries</span>
+      </div>
+      <span class="go">See how it works &rarr;</span>
+    </a>
+    <a href="diskorse-support-experts.html" class="persona-card">
+      <div class="icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg>
+      </div>
+      <h3>Experts &amp; Professionals</h3>
+      <p>Not just attorneys. Travel experts, coaches, tutors, consultants, anyone people would pay for a real answer.</p>
+      <div class="feature-chips">
+        <span class="feature-chip">Counsel</span>
+      </div>
+      <span class="go">See how it works &rarr;</span>
+    </a>
+    <a href="diskorse-support-creatives.html" class="persona-card">
+      <div class="icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+      </div>
+      <h3>Creatives &amp; Writers</h3>
+      <p>You've got ideas worth sharing and writing worth paying for. Build an audience, then sell your best work.</p>
+      <div class="feature-chips">
+        <span class="feature-chip">Explainers</span>
+        <span class="feature-chip">Vault &amp; Bundles</span>
+      </div>
+      <span class="go">See how it works &rarr;</span>
+    </a>
+  </div>
+
+  <div class="basics-note">
+    <p>Not sure yet, or just want the basics first? Every path starts with a Room, whichever one you pick.</p>
+    <a href="#basics">Read Rooms &amp; Basics &rarr;</a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ROOMS & BASICS (rooms only) -->
+<section class="content" id="basics" style="margin-top: 70px;">
+  <div class="section-head">
+    <span class="eyebrow">The foundation</span>
+    <h2>Rooms &amp; the Basics</h2>
+    <p>Everything else on Diskorse, Problem Solver, Counsel, Vault, Explainers, lives inside your Room. Here's what a Room actually is and how it works.</p>
+  </div>
+
+  <details class="faq-item" open>
+    <summary>What is a Room?<span class="plus">+</span></summary>
+    <div class="faq-body">
+      <p>A Room is your space on Diskorse. It holds everything you create: debates, Explainers, Vault articles, Problem Solvers, and Counsel sessions, all in one place other people can find you by.</p>
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>How do I create a Room?<span class="plus">+</span></summary>
+    <div class="faq-body">
+      <p><span class="placeholder">Placeholder: exact setup flow to confirm.</span> Every Room is free to create, no plan required just to have one.</p>
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>Who can post in my Room?<span class="plus">+</span></summary>
+    <div class="faq-body">
+      <p>You're always in control of what you publish. Other people can show up inside your Room too, applying to a Problem Solver you've posted, booking a Counsel session, or leaving a review, but they can't publish content into it directly.</p>
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>What can I do in my Room?<span class="plus">+</span></summary>
+    <div class="faq-body">
+      <p>What you can actually do inside it, publishing Explainers, selling on Vault, running a Problem Solver, offering Counsel, depends on your plan. See <a href="diskorse-support-pricing.html#plans">Pricing &amp; Fees</a> for what unlocks what.</p>
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>How do I monetize my Room?<span class="plus">+</span></summary>
+    <div class="faq-body">
+      <p>A few ways, depending on what you're here to do:</p>
+      <ul>
+        <li>Sell individual articles or Bundles on <a href="diskorse-support-vault.html">Vault</a></li>
+        <li>Offer paid sessions through <a href="diskorse-support-counsel.html">Counsel</a></li>
+        <li>Run a paid <a href="diskorse-support-problem-solver.html">Problem Solver</a> and get paid to contribute to someone else's</li>
+        <li>Respond to <a href="diskorse-support-brand-queries.html">Brand Queries</a> as a verified brand</li>
+      </ul>
+      <p>Each of these has its own plan requirement, see <a href="diskorse-support-pricing.html#plans">Pricing &amp; Fees</a> for the breakdown.</p>
+    </div>
+  </details>
+</section>
+
+<!-- VOUCHERS -->
+<section class="content" id="vouchers">
+  <div class="section-head">
+    <span class="eyebrow">Credibility</span>
+    <h2>Vouches</h2>
+    <p>Vouches are Diskorse's credibility layer, a signal to other users, clients, and brands that you're worth trusting in a specific category.</p>
+  </div>
+
+  <details class="faq-item" open>
+    <summary>What is a Vouch?<span class="plus">+</span></summary>
+    <div class="faq-body">
+      <p>A Vouch is a mark of credibility someone gives you after you've actually helped them, in a specific category. Vouches show up on your profile and signal to potential Counsel clients, Vault readers, and brands that you're worth trusting, so they carry real weight beyond just a number.</p>
+    </div>
+  </details>
+
+  <details class="faq-item" open>
+    <summary>How do I earn a Vouch?<span class="plus">+</span></summary>
+    <div class="faq-body">
+      <p>You can't just be handed a Vouch out of nowhere, someone has to have actually interacted with something you did in that category first. That could mean:</p>
+      <ul>
+        <li>Contributing to someone's Problem Solver and having them vouch for your input afterward</li>
+        <li>Winning a Debate Arena in a given category</li>
+        <li>Wrapping up a Counsel session the client was happy with</li>
+      </ul>
+      <p>The Vouch is then tied to that specific category, so someone can build a strong reputation in, say, skincare, without it automatically implying credibility in, say, finance.</p>
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>Is there a limit to how often someone can vouch for me?<span class="plus">+</span></summary>
+    <div class="faq-body">
+      <p>Yes, there are limits so Vouches stay meaningful instead of turning into a popularity contest. <span class="placeholder">To confirm: cap is twice per category per person per month.</span> The same person can vouch for you in the same category, but only up to that limit, they can't just keep stacking Vouches on top of each other.</p>
+      <div class="note flag">Flagged to confirm: you mentioned this limit as "I think twice a month" when we talked it through, worth double checking the exact number before this goes live.</div>
+    </div>
+  </details>
+
+  <details class="faq-item">
+    <summary>How are my Vouches displayed on my profile?<span class="plus">+</span></summary>
+    <div class="faq-body">
+      <p>By default, the categories where you have the most Vouches show up at the top of your profile. You can also customize this yourself, choosing which categories to highlight and reordering them, rather than always being stuck with whatever ranks highest automatically.</p>
+    </div>
+  </details>
+</section>
+
+<!-- FREE FEATURES (explainer cards, not FAQ) -->
+<section class="content" id="free-features">
+  <div class="section-head">
+    <span class="eyebrow">Explore the platform</span>
+    <h2>Free features</h2>
+    <p>A few things you can do on Diskorse without a paid plan, useful on their own and often the first step toward building the credibility that paid features reward.</p>
+  </div>
+
+  <div class="feature-explain-grid">
+    <div class="feature-explain-card">
+      <div class="icon">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 12h8M8 16h5M4 4h16v13H8l-4 4V4Z"/></svg>
+      </div>
+      <div>
+        <span class="tag-free">Free</span>
+        <h4>Debate Arena</h4>
+        <p>A structured debate that lives inside your Room. You invite participants, arguments go up during a set window, then the community votes and a winner is announced. Winning builds your Vouches and credibility, which feeds directly into Counsel bookings, Vault trust, and Brand Query responses.</p>
+      </div>
+    </div>
+
+    <div class="feature-explain-card">
+      <div class="icon">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      </div>
+      <div>
+        <span class="tag-free">Free</span>
+        <h4>Polls</h4>
+        <p>A lightweight way to get a read on an idea without setting up a paid Problem Solver. Anyone can vote or drop a quick opinion, public, fast, and free, useful when you want broad reaction rather than a deep paid conversation.</p>
+      </div>
+    </div>
+
+    <div class="feature-explain-card">
+      <div class="icon">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+      </div>
+      <div>
+        <span class="tag-free">Free to read</span>
+        <h4>Explainers</h4>
+        <p>Ongoing posts inside a creator's Room, similar to a blog, and how most creators build an audience over time. Reading them is free for everyone. Publishing your own needs the Creator plan.</p>
+        <a href="diskorse-support-explainers.html" class="learn">Learn more about Explainers &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="contact-card">
+  <div class="contact-inner">
+    <h3>Still need help?</h3>
+    <p>Reach out and our support team will get back to you.</p>
+    <div class="contact-actions">
+      <a href="#" class="btn-primary">Contact support</a>
+      <a href="#" class="btn-outline">support@diskorse.com (placeholder)</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site">
+  <div class="footer-inner">
+    <span>© 2026 Diskorse, Inc.</span>
+    <div class="footer-links">
+      <a href="diskorse-support-mockup.html">Support home</a>
+      <a href="#">Status</a>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
