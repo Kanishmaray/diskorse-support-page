@@ -122,7 +122,7 @@
 <body>
 
 <div class="draft-banner">
-  Design draft for internal review. Plan names, prices, and feature gates below reflect the pricing structure shared 2026-07-17. Still to confirm: whether the 10% commission applies to Vault sales on the Engage plan.
+  Design draft for internal review. Plan names, prices, and feature gates below reflect the pricing structure shared 2026-07-17.
 </div>
 
 <header class="site">
@@ -274,10 +274,12 @@
   </div>
 
   <details class="faq-item" open>
-    <summary>What does Diskorse take from each sale?<span class="plus">+</span></summary>
+    <summary>What fees does Diskorse charge for each feature?<span class="plus">+</span></summary>
     <div class="faq-body">
-      <p>10% on Vault sales and Counsel sessions, for anyone on the Creator, Brand, or Brand+ plan. Stripe takes its own separate processing fee on top of that, covered on the <a href="diskorse-support-payments.html">Payments &amp; Stripe</a> page.</p>
-      <div class="note flag">Flagged to confirm: the commission list only names Creator, Brand, and Brand+, but the Engage plan also allows selling individual Vault articles. Worth double checking whether Engage sales carry the same 10% or are commission free.</div>
+      <p><strong>Vault Articles &amp; Bundles</strong> &mdash; Diskorse charges a platform fee of 10% by default. This fee is configurable and may increase up to 15% at higher volume tiers.</p>
+      <p><strong>Problem Solver</strong> &mdash; Diskorse currently does not charge a platform fee for Problem Solver payouts. The full escrowed amount (converted from USD to GBP and then to the contributor's local currency where applicable) is transferred to the contributor.</p>
+      <p><strong>Counsel Sessions</strong> &mdash; The pricing page currently references a 10% commission for Counsel sessions. However, payment processing and booking functionality for this feature has not yet been implemented, so this is currently informational only.</p>
+      <p>Stripe takes its own separate processing fee on top of this, covered on the <a href="diskorse-support-payments.html">Payments &amp; Stripe</a> page.</p>
     </div>
   </details>
 
@@ -291,14 +293,23 @@
   <details class="faq-item">
     <summary>How does annual billing work?<span class="plus">+</span></summary>
     <div class="faq-body">
-      <p>Paying annually saves you 2 months compared to paying monthly all year, worked out to 10 months' cost for 12 months of access.</p>
+      <p>You can choose between Monthly and Annual billing directly from the pricing page. Annual plans offer approximately two months of savings compared with paying monthly for a full year (for example, Engage costs $5/month or $50/year).</p>
+      <p>New subscriptions are processed through Stripe Checkout, while existing subscribers can manage billing intervals and plan changes through the Stripe Customer Portal.</p>
     </div>
   </details>
 
   <details class="faq-item">
-    <summary>Can I change plans later?<span class="plus">+</span></summary>
+    <summary>Can I change my subscription plan later?<span class="plus">+</span></summary>
     <div class="faq-body">
-      <p><span class="placeholder">Placeholder: upgrade, downgrade, and proration policy to confirm.</span></p>
+      <p>Yes. You can switch between Monthly and Annual billing at any time and upgrade or downgrade across all available plans:</p>
+      <ul>
+        <li>Free</li>
+        <li>Engage &ndash; $5/month</li>
+        <li>Creator &ndash; $12/month</li>
+        <li>Brand &ndash; $29/month</li>
+        <li>Brand+ &ndash; $50/month</li>
+      </ul>
+      <p>Annual plans are available at 10&times; the monthly price. Upgrades are prorated through the Stripe Customer Portal, while downgrades take effect at the end of your current billing period.</p>
     </div>
   </details>
 </section>
